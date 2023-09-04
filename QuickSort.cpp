@@ -1,13 +1,15 @@
 #include "QuickSort.h"
 
-int QuickSort::partition(std::vector<int>& list, int left, int right) {
-    int pivotValue;
-    if(right - left + 1 >= 3) {
-        pivotValue = list[left + 2]; // third element as pivot
-    } else {
-        pivotValue = list[right];    // fall back to the last element if there are fewer than 3 elements
+void QuickSort::quicksort(std::vector<int>& list, int left, int right) {
+    if(left < right) {
+        int pivotIndex = partition(list, left, right);
+        quicksort(list, left, pivotIndex - 1);
+        quicksort(list, pivotIndex + 1, right);
     }
-    
+}
+
+int QuickSort::partition(std::vector<int>& list, int left, int right) {
+    int pivotValue = list[left + 2]; // third element as pivot
     int i = left, j = right;
     while(i <= j) {
         while(list[i] < pivotValue) i++;
@@ -19,4 +21,10 @@ int QuickSort::partition(std::vector<int>& list, int left, int right) {
         }
     }
     return i;
+}
+
+std::vector<int> QuickSort::sort(const std::vector<int>& list) {
+    std::vector<int> result = list;
+    quicksort(result, 0, result.size() - 1);
+    return result;
 }
