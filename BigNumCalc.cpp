@@ -8,7 +8,7 @@ bigNumCalc::~bigNumCalc() {
     // Destructor body (if any cleanup needed)
 }
 
-std::list<int> bigNumCalc::buildBigNum(std::string numString) {
+std::list<int> bigNumCalc::buildBigNum(const std::string& numString) {
     std::list<int> result;
     for (char c : numString) {
         if (isdigit(c)) {
