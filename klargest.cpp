@@ -2,21 +2,21 @@
 #include <vector>
 #include <queue>
 
-int kth_largest(const std::vector<int>& values, int k) {
-    std::priority_queue<int> pq(values.begin(), values.end());
+int kth_largest(std::vector<int> values, int k) {
+    // Using a lambda to create a min-heap
+    std::priority_queue<int, std::vector<int>, std::greater<int>> minHeap;
 
-    for (int i = 1; i < k; ++i) {
-        if (!pq.empty()) {
-            pq.pop();
-        } else {
-            // This will handle the case when k is larger than the size of values
-            return -1; // or some other indicator value
+    for (int val : values) {
+        minHeap.push(val);
+        
+        // If heap size grows beyond k, we pop the smallest
+        if (minHeap.size() > k) {
+            minHeap.pop();
         }
     }
 
-    if (!pq.empty()) {
-        return pq.top();
-    } else {
-        return -1; // or some other indicator value
+    if (minHeap.size() < k) {
+        return -1; // indicating an error as kth largest is not present
     }
+    return minHeap.top();  // Returns the kth largest element
 }
