@@ -6,8 +6,17 @@ int kth_largest(const std::vector<int>& values, int k) {
     std::priority_queue<int> pq(values.begin(), values.end());
 
     for (int i = 1; i < k; ++i) {
-        pq.pop();
+        if (!pq.empty()) {
+            pq.pop();
+        } else {
+            // This will handle the case when k is larger than the size of values
+            return -1; // or some other indicator value
+        }
     }
 
-    return pq.top();
+    if (!pq.empty()) {
+        return pq.top();
+    } else {
+        return -1; // or some other indicator value
+    }
 }
