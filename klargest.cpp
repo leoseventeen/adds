@@ -3,15 +3,11 @@
 #include <queue>
 
 int kth_largest(const std::vector<int>& values, int k) {
-    // priority_queue by default uses max-heap
-    // We need a min-heap to efficiently get kth largest
-    std::priority_queue<int, std::vector<int>, std::greater<int>> min_heap;
+    std::priority_queue<int> pq(values.begin(), values.end());
 
-    for (int val : values) {
-        min_heap.push(val);
-        if (min_heap.size() > k) {
-            min_heap.pop();
-        }
+    for (int i = 1; i < k; ++i) {
+        pq.pop();
     }
-    return min_heap.top();
+
+    return pq.top();
 }
