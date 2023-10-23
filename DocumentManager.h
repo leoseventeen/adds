@@ -1,25 +1,28 @@
-#include <unordered_map>
-#include <unordered_set>
 #include <string>
+#include <unordered_map>
+#include <set>
 
-class Document {
-public:
+using namespace std;
+
+// A simple structure to hold Document details
+struct Document {
+    string name;
     int id;
     int license_limit;
-    int current_borrowed;
-    Document(int id, int license_limit);
 };
 
 class DocumentManager {
 private:
-    std::unordered_map<std::string, Document> doc_map;
-    std::unordered_set<int> patrons;
-    std::unordered_map<int, std::unordered_set<int>> doc_borrowers;
+    unordered_map<string, int> nameToIdMap;
+    unordered_map<int, Document> documents;
+    unordered_map<int, int> borrowedCopies;
+    unordered_map<int, set<int>> docToPatrons;
+    set<int> patrons;
 
 public:
-    void addDocument(std::string name, int id, int license_limit);
+    void addDocument(string name, int id, int license_limit);
     void addPatron(int patronID);
-    int search(std::string name);
+    int search(string name);
     bool borrowDocument(int docid, int patronID);
     void returnDocument(int docid, int patronID);
 };
